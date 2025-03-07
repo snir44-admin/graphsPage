@@ -1,7 +1,5 @@
-/* Import a Sleek, Elegant Font */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&display=swap');
 
-/* Smooth Background Gradient */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;600&display=swap');
 
 .InputContainer{
   align-items: center;
@@ -17,9 +15,10 @@ body {
   align-items: center;
   height: 100vh;
   color: #ecf0f1;
+  overflow: hidden;
 }
 
-/* App Container - Slightly Reduced Height */
+
 .App {
   text-align: center;
   padding: 40px;
@@ -35,7 +34,6 @@ body {
   justify-content: space-between;
 }
 
-/* Elegant Heading */
 h1 {
   font-size: 32px;
   font-weight: 600;
@@ -43,8 +41,6 @@ h1 {
   margin-bottom: 20px;
   letter-spacing: 1.5px;
 }
-
-/* Input Field - Bigger and More Visible */
 
 input {
   width: 60%;
@@ -64,7 +60,6 @@ input:focus {
   box-shadow: 0px 0px 10px rgba(52, 152, 219, 0.5);
 }
 
-/* Button - Larger and Aligned to the Right */
 button {
   position: relative;   
   padding: 14px 28px;
@@ -88,31 +83,29 @@ button:hover {
   margin-left: 10px;
 }
 
-/* Graph Container - Adjusted to Stay Inside Main Box */
+
 .graph-container {
   position: relative; 
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
 
 }
 
-.sad-face-container {
+.bad-message-container {
 
   white-space: nowrap;
   text-align: center;
   position: absolute;
   top: 40%;  
-  left: 35%;
+  left: 45%;
   transform: translate(-50%, -50%);
-  width: 50px;  /* Adjust based on your needs */
+  width: 50px; 
   height: 50px;
 }
 
-.sad-face {
-  max-width: 100%;  /* Ensures the image scales properly */
-  max-height: 100%;
-}
-
-/* Graph Styles */
 svg {
   width: 100%;
   height: 100%;
@@ -132,50 +125,69 @@ circle {
   stroke-width: 3;
 }
 
-/* Text Styling */
+
 p {
   font-size: 17px;
   color: #bdc3c7;
 }
 
-/* Language Switcher - Larger and More Defined */
-.language-switcher {
-  margin-top: 20px;
-}
-
-.language-switcher button {
-  margin: 8px;
-  padding: 10px 18px;
-  font-size: 16px;
-  background: #222;
-  color: white;
-  border: 2px solid #00ffea;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-
-.language-switcher button:hover {
-  background: #00ffea;
-  color: black;
-}
-
 .input-container {
   display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Aligns items vertically */
-  width: 100%; /* Adjust to fit within your layout */
-  gap: 10px; /* Adds space between input and button */
+  justify-content: center;
+  align-items: center; 
+  width: 100%; 
+  gap: 10px; 
 }
 
-/* Ensure the input field takes most of the space */
 .input-container input {
-  width: 63%;
-  min-width: 0; /* Prevents input from overflowing */
+  width: 48%;
+  min-width: 0; 
 }
 
-/* Adjust button size */
 .input-container button { 
-  white-space: nowrap; /* Prevents text wrapping inside button */
+  white-space: nowrap; 
+}
+
+.container {
+  padding-top: 150px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100vh;
+  gap: 40px;
+
+}
+
+.App {
+
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+  max-width: 70%; 
+}
+
+.log-container {
+
+  width: 700px;
+  height: 78vh;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+  overflow-y: auto;
+
+}
+
+.log-content {
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: 'Courier New', monospace;
+}
+.tittleHavelHakimi{
+  text-align: center;
 }
