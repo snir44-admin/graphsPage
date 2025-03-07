@@ -78,6 +78,6 @@ We welcome contributions! Feel free to fork this repository, create a feature br
 
 ## 🔗 Contact
 For any inquiries or issues, feel free to reach out:
-- 📧 Email: your.email@example.com
-- 🔗 GitHub: [yourusername](https://github.com/yourusername)
+- 📧 Email: snibanez@uninorte.edu.co
+- 🔗 GitHub: [snir44-admin](https://github.com/snir44-admin)
 
