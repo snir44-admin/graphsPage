@@ -6,7 +6,7 @@ const GraphDisplay = ({ graphData }) => {
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
-    svg.selectAll('*').remove();
+    svg.selectAll('*').remove(); // Limpia cualquier gráfico anterior
 
     if (graphData) {
       const width = 600;
@@ -47,16 +47,26 @@ const GraphDisplay = ({ graphData }) => {
 
       simulation.on('tick', () => {
         link
-          .attr('x1', (d) => d.source.x)
-          .attr('y1', (d) => d.source.y)
-          .attr('x2', (d) => d.target.x)
-          .attr('y2', (d) => d.target.y);
+          .attr('x1', (d) => clamp(d.source.x, nodeRadius, width - nodeRadius))
+          .attr('y1', (d) => clamp(d.source.y, nodeRadius, height - nodeRadius))
+          .attr('x2', (d) => clamp(d.target.x, nodeRadius, width - nodeRadius))
+          .attr('y2', (d) => clamp(d.target.y, nodeRadius, height - nodeRadius));
 
-        node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
-        label.attr('x', (d) => d.x).attr('y', (d) => d.y);
+        node
+          .attr('cx', (d) => (d.x = clamp(d.x, nodeRadius, width - nodeRadius)))
+          .attr('cy', (d) => (d.y = clamp(d.y, nodeRadius, height - nodeRadius)));
+
+        label
+          .attr('x', (d) => d.x)
+          .attr('y', (d) => d.y);
       });
     }
-  }, [graphData]);
+
+    // Función auxiliar: asegura que un valor se mantenga entre min y max.
+    function clamp(val, min, max) {
+      return Math.max(min, Math.min(max, val));
+    }
+  }, [graphData]); // Dependencia corregida
 
   return <svg ref={svgRef} width="600" height="300"></svg>;
 };
