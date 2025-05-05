@@ -22,7 +22,7 @@ const GraphInput = ({ sequence, setSequence, handleCheck }) => {
     <div className="inputContainer">
       <input
         type="text"
-        inputMode="decimal"
+        inputMode="text"
         pattern="[0-9,]*"
         value={sequence}
         onChange={handleChange}
