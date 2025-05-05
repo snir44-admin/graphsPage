@@ -1,72 +1,88 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import GraphInput from '../components/GraphInput';
 import GraphDisplay from '../components/GraphDisplay';
 import { GraphValidator } from '../services/GraphValidator';
 import { GraphBuilder } from '../services/GraphBuilder';
+import '../services/i18n'; // asegúrate de que este archivo exista
 import '../App.css';
 
 function App() {
+  const { t, i18n } = useTranslation();
+
   const [sequence, setSequence] = useState('');
   const [result, setResult] = useState('');
   const [graphData, setGraphData] = useState(null);
-  const [logs, setLogs] = useState([]); 
+  const [logs, setLogs] = useState([]);
 
- 
-  const captureLog = (message) => {
-    setLogs((prevLogs) => [...prevLogs, message]); 
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'es' ? 'en' : 'es';
+    i18n.changeLanguage(newLang);
   };
 
   const handleCheck = () => {
-    setLogs([]);  
-  
+    setLogs([]);
+
     let newLogs = [];
-    newLogs.push(`Verificando secuencia: ${sequence}`);
-  
+    newLogs.push(`${t('checkingSequence')}: ${sequence}`);
+
     const isGraph = GraphValidator.isGraphical(sequence, (msg) => {
-      newLogs.push(msg);
+      newLogs.push(msg); // mensajes vienen ya traducidos
     });
-  
-    setResult(isGraph ? 'La secuencia es graficable.' : 'La secuencia no es graficable.');
-    newLogs.push(`Resultado: ${isGraph ? 'La secuencia es graficable.' : 'La secuencia no es graficable.'}`);
-  
+
+    const resultMessage = isGraph ? t('resultYes') : t('resultNo');
+    newLogs.push(`${t('result')}: ${resultMessage}`);
+    setResult(resultMessage);
+
     if (isGraph) {
       const data = GraphBuilder.generateGraphData(sequence);
       setGraphData(data);
-      newLogs.push('Generando grafo...');
+      newLogs.push(t('generatingGraph'));
     } else {
       setGraphData(null);
-      newLogs.push('No se generó un grafo.');
+      newLogs.push(t('noGraphGenerated'));
     }
-  
-    setLogs(newLogs); 
+
+    setLogs(newLogs);
   };
-  
 
   return (
     <div className="container">
-      {/* Sección principal */}
-      <div className="App">
-        <h1>Visualización de Grafos</h1>
-        <p>Ingrese una secuencia de grados (separada por comas):</p>
+      <h1 className="mainTitle">{t('title')}</h1>
+      <p className="subTittle">{t('subtitle')}</p>
 
-        <div className="input-container">
-          <GraphInput sequence={sequence} setSequence={setSequence} handleCheck={handleCheck} />
+      <div className="inputContainer">
+        <GraphInput
+          sequence={sequence}
+          setSequence={setSequence}
+          handleCheck={handleCheck}
+        />
+      </div>
+
+      <div className="contentRow">
+        <div className="graphBox">
+          {graphData ? (
+            <GraphDisplay graphData={graphData} />
+          ) : result ? (
+            <p className="badMessage">{t('notGraphical')}</p>
+          ) : (
+            <h2 className="tittleHavelHakimi">{t('visualizer')}</h2>
+          )}
         </div>
-
-        <div className="graph-container">
-          {!graphData && result &&   <p className="bad-message-container">No es graficable</p>}
-          <GraphDisplay graphData={graphData} />
+        <div className="boxContainer">
+          <h2 className="tittleHavelHakimi">Teorema Havel-Hakimi</h2>
+          <div className="logContent">
+            {logs.map((log, index) => (
+              <p key={index}>{log}</p>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="log-container">
-        <h2 className="tittleHavelHakimi">Teorema Havel-Hakimi</h2>
-        <div className="log-content">
-          {logs.map((log, index) => (
-            <p key={index}>{log}</p>
-          ))}
-        </div>
-      </div>
+      {/* 🌐 Floating language switcher */}
+      <button className="floating-button" onClick={toggleLanguage}>
+        {i18n.language === 'es' ? 'EN' : 'ES'}
+      </button>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const GraphInput = ({ sequence, setSequence, handleCheck }) => (
-  <div className="input-container">
+  <div className="inputContainer">
     <input
       type="text"
       value={sequence}

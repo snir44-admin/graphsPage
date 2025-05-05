@@ -5,18 +5,21 @@ const GraphDisplay = ({ graphData }) => {
   const svgRef = useRef();
 
   useEffect(() => {
-    const svg = d3.select(svgRef.current);
+    const svgElement = svgRef.current;
+    const svg = d3.select(svgElement);
     svg.selectAll('*').remove(); // Limpia cualquier gráfico anterior
 
-    if (graphData) {
-      const width = 600;
-      const height = 300;
-      const nodeRadius = 10;
+    // Obtener tamaño real del contenedor
+    const bounds = svgElement.getBoundingClientRect();
+    const width = bounds.width;
+    const height = bounds.height;
+    const nodeRadius = 13;
 
+    if (graphData) {
       const simulation = d3
         .forceSimulation(graphData.nodes)
-        .force('link', d3.forceLink(graphData.links).id((d) => d.id))
-        .force('charge', d3.forceManyBody().strength(-100))
+        .force('link', d3.forceLink(graphData.links).id((d) => d.id).distance(100))
+        .force('charge', d3.forceManyBody().strength(-150))
         .force('center', d3.forceCenter(width / 2, height / 2));
 
       const link = svg.append('g')
@@ -42,6 +45,7 @@ const GraphDisplay = ({ graphData }) => {
         .append('text')
         .text((d) => `${d.degree}`)
         .attr('font-size', 12)
+        .attr('fill', 'white') // Color blanco para el texto
         .attr('dx', 15)
         .attr('dy', 4);
 
@@ -62,13 +66,19 @@ const GraphDisplay = ({ graphData }) => {
       });
     }
 
-    // Función auxiliar: asegura que un valor se mantenga entre min y max.
     function clamp(val, min, max) {
       return Math.max(min, Math.min(max, val));
     }
-  }, [graphData]); // Dependencia corregida
+  }, [graphData]);
 
-  return <svg ref={svgRef} width="600" height="300"></svg>;
+  return (
+    <svg
+      ref={svgRef}
+      viewBox="0 0 750 500"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ width: '100%', height: '100%', display: 'block', maxWidth: '100%' }}
+    />
+  );
 };
 
 export default GraphDisplay;
