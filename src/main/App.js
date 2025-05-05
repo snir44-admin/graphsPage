@@ -66,11 +66,11 @@ function App() {
           ) : result ? (
             <p className="badMessage">{t('notGraphical')}</p>
           ) : (
-            <h2 className="tittleHavelHakimi">{t('visualizer')}</h2>
+            <h2 className="tittleHavelHakimi">{t('theorem')}</h2>
           )}
         </div>
         <div className="boxContainer">
-          <h2 className="tittleHavelHakimi">Teorema Havel-Hakimi</h2>
+          <h2 className="tittleHavelHakimi">{t('title')}</h2>
           <div className="logContent">
             {logs.map((log, index) => (
               <p key={index}>{log}</p>
