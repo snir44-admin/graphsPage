@@ -4,7 +4,7 @@ import GraphInput from '../components/GraphInput';
 import GraphDisplay from '../components/GraphDisplay';
 import { GraphValidator } from '../services/GraphValidator';
 import { GraphBuilder } from '../services/GraphBuilder';
-import '../services/i18n'; // asegúrate de que este archivo exista
+import '../services/i18n';
 import '../App.css';
 
 function App() {
@@ -21,26 +21,27 @@ function App() {
   };
 
   const handleCheck = () => {
-    setLogs([]);
+    const newLogs = [];
 
-    let newLogs = [];
-    newLogs.push(`${t('checkingSequence')}: ${sequence}`);
+    // 🧩 Log inicial: secuencia ingresada
+    newLogs.push({ key: 'checkingSequence', values: { sequence } });
 
-    const isGraph = GraphValidator.isGraphical(sequence, (msg) => {
-      newLogs.push(msg); // mensajes vienen ya traducidos
+    // ✅ Validación con GraphValidator
+    const isGraph = GraphValidator.isGraphical(sequence, (logEntry) => {
+      newLogs.push(logEntry); // logEntry debe ser { key, values }
     });
 
-    const resultMessage = isGraph ? t('resultYes') : t('resultNo');
-    newLogs.push(`${t('result')}: ${resultMessage}`);
-    setResult(resultMessage);
+    const resultKey = isGraph ? 'resultYes' : 'resultNo';
+    newLogs.push({ key: 'result', values: { result: t(resultKey) } });
+    setResult(t(resultKey));
 
     if (isGraph) {
       const data = GraphBuilder.generateGraphData(sequence);
       setGraphData(data);
-      newLogs.push(t('generatingGraph'));
+      newLogs.push({ key: 'generatingGraph' });
     } else {
       setGraphData(null);
-      newLogs.push(t('noGraphGenerated'));
+      newLogs.push({ key: 'noGraphGenerated' });
     }
 
     setLogs(newLogs);
@@ -66,20 +67,26 @@ function App() {
           ) : result ? (
             <p className="badMessage">{t('notGraphical')}</p>
           ) : (
-            <h2 className="tittleHavelHakimi">{t('theorem')}</h2>
+            <h2 className="tittleHavelHakimi">{t('visualizer')}</h2>
           )}
         </div>
+
         <div className="boxContainer">
-          <h2 className="tittleHavelHakimi">{t('title')}</h2>
+          <h2 className="tittleHavelHakimi">{t('logTitle')}</h2>
           <div className="logContent">
-            {logs.map((log, index) => (
-              <p key={index}>{log}</p>
-            ))}
+            {logs.map((log, index) => {
+              if (typeof log === 'string') {
+                return <p key={index}>{log}</p>;
+              }
+              if (typeof log === 'object' && log.key) {
+                return <p key={index}>{t(log.key, log.values || {})}</p>;
+              }
+              return null; // fallback por si algo se cuela mal
+            })}
           </div>
         </div>
       </div>
 
-      {/* 🌐 Floating language switcher */}
       <button className="floating-button" onClick={toggleLanguage}>
         {i18n.language === 'es' ? 'EN' : 'ES'}
       </button>
@@ -88,3 +95,4 @@ function App() {
 }
 
 export default App;
+

@@ -34,6 +34,11 @@ html, body {
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .floating-button:hover {
@@ -116,8 +121,10 @@ html, body {
 }
 
 .inputContainer button {
-  padding: 0.75rem 1.5rem;
-  font-size: 1.2rem;
+  width: 8rem; /* Tamaño fijo para mantener igual en EN/ES */
+  height: 3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
   border: none;
   background: linear-gradient(to right, #2980b9, #2c3e50);
   color: white;
@@ -125,6 +132,10 @@ html, body {
   border-radius: 0.625rem;
   transition: all 0.3s ease-in-out;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .inputContainer button:hover {
@@ -153,7 +164,6 @@ html, body {
   background: rgba(24, 24, 24, 0.95);
   border-radius: 1rem;
   padding: 1.5rem;
-  
   display: flex;
   flex-direction: column;
   max-height: 32vh;
@@ -170,13 +180,13 @@ html, body {
   box-sizing: border-box;
   max-height: 100%;
 }
+
 @media (min-width: 768px) {
   .boxContainer {
     min-height: 35rem;
   }
 }
 
-/* Ajuste para móviles */
 @media (max-width: 767px) {
   .boxContainer {
     max-height: 60vh;
@@ -195,6 +205,18 @@ html, body {
   font-size: 1.2rem;
   color: #bdc3c7;
   margin-bottom: 0.5rem;
+}
+
+.inputErrorText {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  text-align: center;
+  width: 100%;
+}
+
+.inputWithError {
+  border: 1px solid #e74c3c !important;
 }
 
 .emptyGraphSpace {

@@ -1,56 +1,77 @@
+import i18n from 'i18next';
+
 export class GraphValidator {
   static isGraphical(sequence, captureLog) {
     let seq = sequence
       .split(',')
-      .map(s => s.trim()) 
+      .map(s => s.trim())
       .map(Number)
-      .filter(n => !isNaN(n)); 
+      .filter(n => !isNaN(n));
 
+    // ❌ Números negativos no permitidos
     if (seq.some(n => n < 0)) {
-      captureLog("No debe haber números menores que 0");
+      captureLog({ key: 'negativeNumber' });
       return false;
     }
 
- 
+    // 🔢 Verificar si la suma es par
     let sum = seq.reduce((a, b) => a + b, 0);
     if (sum % 2 !== 0) {
-      captureLog("La suma de los grados no es par, no es graficable.");
+      captureLog({ key: 'oddSum' });
       return false;
     }
 
     let iterations = 0;
     const MAX_ITERATIONS = 100;
 
+    // 🔁 Algoritmo de Havel-Hakimi
     while (iterations < MAX_ITERATIONS) {
       iterations++;
-      captureLog(`Secuencia actual: ${JSON.stringify(seq)}`);
+
+      captureLog({
+        key: 'currentSequence',
+        values: { seq: JSON.stringify(seq) }
+      });
 
       if (seq.length === 0) {
-        captureLog("No quedan elementos, es graficable.");
+        captureLog({ key: 'emptySequence' });
         return true;
       }
 
       seq.sort((a, b) => b - a);
-      captureLog(`Después de ordenar: ${JSON.stringify(seq)}`);
+      captureLog({
+        key: 'sortedSequence',
+        values: { seq: JSON.stringify(seq) }
+      });
 
       const d = seq.shift();
-      captureLog(`Removido el primer elemento (d = ${d}), secuencia restante: ${JSON.stringify(seq)}`);
+      captureLog({
+        key: 'removedFirst',
+        values: { d, seq: JSON.stringify(seq) }
+      });
 
       if (d > seq.length) {
-        captureLog(`d = ${d} es mayor que la longitud restante (${seq.length}), no es graficable.`);
+        captureLog({
+          key: 'degreeTooLarge',
+          values: { d, len: seq.length }
+        });
         return false;
       }
 
       for (let i = 0; i < d; i++) {
         seq[i] -= 1;
         if (seq[i] < 0) {
-          captureLog("Un elemento se volvió negativo, no es graficable.");
+          captureLog({ key: 'becameNegative' });
           return false;
         }
       }
     }
 
-    captureLog("Se alcanzó el límite de iteraciones, posible error en el cálculo.");
+    // ⚠️ Bucle excedido
+    captureLog({ key: 'reachedLimit' });
     return false;
   }
-};
+}
+
+
+

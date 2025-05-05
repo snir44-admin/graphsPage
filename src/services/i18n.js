@@ -12,12 +12,22 @@ const resources = {
       check: "Check",
       notGraphical: "Not graphical",
       visualizer: "Visualizer",
-      theorem: "Havel-Hakimi Theorem",
-      checkingSequence: "Checking sequence: ",
+      logTitle: "Havel-Hakimi Theorem",
+      checkingSequence: "Checking sequence ",
       resultYes: "The sequence is graphical.",
       resultNo: "The sequence is not graphical.",
       generatingGraph: "Generating graph...",
-      noGraphGenerated: "No graph was generated."
+      noGraphGenerated: "No graph was generated.",
+      currentSequence: 'Current sequence: {{seq}}',
+      sortedSequence: 'After sorting: {{seq}}',
+      removedFirst: 'Removed first element (d = {{d}}), remaining sequence: {{seq}}',
+      degreeTooLarge: 'd = {{d}} is greater than remaining length ({{len}}), not graphical.',
+      negativeNumber: 'No negative numbers allowed',
+      oddSum: 'The sum of degrees is not even, not graphical.',
+      becameNegative: 'An element became negative, not graphical.',
+      reachedLimit: 'Max iteration limit reached, possible calculation error.',
+      emptySequence: 'No elements left, it is graphical.',
+      inputError: "Input error"
     }
   },
   es: {
@@ -28,12 +38,22 @@ const resources = {
       check: "Comprobar",
       notGraphical: "No es graficable",
       visualizer: "Visualizador",
-      theorem: "Teorema Havel-Hakimi",
-      checkingSequence: "Verificando secuencia. Ejemplo: 4,3,3,3,3  ",
+      logTitle: "Teorema Havel-Hakimi",
+      checkingSequence: "Verificando secuencia.",
       resultYes: "La secuencia es graficable.",
       resultNo: "La secuencia no es graficable.",
       generatingGraph: "Generando grafo...",
-      noGraphGenerated: "No se generó un grafo."
+      noGraphGenerated: "No se generó un grafo.",
+      currentSequence: 'Secuencia actual: {{seq}}',
+      sortedSequence: 'Después de ordenar: {{seq}}',
+      removedFirst: 'Removido el primer elemento (d = {{d}}), secuencia restante: {{seq}}',
+      degreeTooLarge: 'd = {{d}} es mayor que la longitud restante ({{len}}), no es graficable.',
+      negativeNumber: 'No debe haber números menores que 0',
+      oddSum: 'La suma de los grados no es par, no es graficable.',
+      becameNegative: 'Un elemento se volvió negativo, no es graficable.',
+      reachedLimit: 'Se alcanzó el límite de iteraciones, posible error en el cálculo.',
+      emptySequence: 'No quedan elementos, es graficable.',
+      inputError: "Error en entrada de texto"
     }
   }
 };
