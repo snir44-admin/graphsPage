@@ -13,14 +13,16 @@ const GraphInput = ({ sequence, setSequence, handleCheck }) => {
     if (isValid) {
       setInputError(null);
       setSequence(value);
-    } 
+    } else {
+      setInputError({ key: 'inputError' }); // Clave i18n para error
+    }
   };
 
   return (
     <div className="inputContainer">
       <input
         type="text"
-        inputMode="numeric"
+        inputMode="decimal"
         pattern="[0-9,]*"
         value={sequence}
         onChange={handleChange}
